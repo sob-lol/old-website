@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en_US">
+<head>
+<title> @ Sobh.in </title>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<meta name="theme-color" content="#000000">
+<meta property="og:url" content="https://sobh.in" />
+<meta property="og:title" content="sobh.in" />
+<meta property="og:image" href="https://files.offshore.cat/KRszsNJ8.gif" />
+<meta property="og:description" content="Sob :)" />
+<link rel="shortcut icon" type="image/png" href="spinny.gif">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<script>
+	var colour="random";
+		var sparkles=50;
+
+		var x=ox=400;
+		var y=oy=300;
+		var swide=800;
+		var shigh=600;
+		var sleft=sdown=0;
+		var tiny=new Array();
+		var star=new Array();
+		var starv=new Array();
+		var starx=new Array();
+		var stary=new Array();
+		var tinyx=new Array();
+		var tinyy=new Array();
+		var tinyv=new Array();
+
+		window.onload=function() { if (document.getElementById) {
+		  var i, rats, rlef, rdow;
+		  for (var i=0; i<sparkles; i++) {
+		    var rats=createDiv(3, 3);
+		    rats.style.visibility="hidden";
+		    rats.style.zIndex="999";
+		    document.body.appendChild(tiny[i]=rats);
+		    starv[i]=0;
+		    tinyv[i]=0;
+		    var rats=createDiv(5, 5);
+		    rats.style.backgroundColor="transparent";
+		    rats.style.visibility="hidden";
+		    rats.style.zIndex="999";
+		    var rlef=createDiv(1, 5);
+		    var rdow=createDiv(5, 1);
+		    rats.appendChild(rlef);
+		    rats.appendChild(rdow);
+		    rlef.style.top="2px";
+		    rlef.style.left="0px";
+		    rdow.style.top="0px";
+		    rdow.style.left="2px";
+		    document.body.appendChild(star[i]=rats);
+		  }
+		  set_width();
+		  sparkle();
+		}}
+
+		function sparkle() {
+		  var c;
+		  if (Math.abs(x-ox)>1 || Math.abs(y-oy)>1) {
+		    ox=x;
+		    oy=y;
+		    for (c=0; c<sparkles; c++) if (!starv[c]) {
+		      star[c].style.left=(starx[c]=x)+"px";
+		      star[c].style.top=(stary[c]=y+1)+"px";
+		      star[c].style.clip="rect(0px, 5px, 5px, 0px)";
+		      star[c].childNodes[0].style.backgroundColor=star[c].childNodes[1].style.backgroundColor=(colour=="random")?newColour():colour;
+		      star[c].style.visibility="visible";
+		      starv[c]=50;
+		      break;
+		    }
+		  }
+		  for (c=0; c<sparkles; c++) {
+		    if (starv[c]) update_star(c);
+		    if (tinyv[c]) update_tiny(c);
+		  }
+		  setTimeout("sparkle()", 40);
+		}
+
+		function update_star(i) {
+		  if (--starv[i]==25) star[i].style.clip="rect(1px, 4px, 4px, 1px)";
+		  if (starv[i]) {
+		    stary[i]+=1+Math.random()*3;
+		    starx[i]+=(i%5-2)/5;
+		    if (stary[i]<shigh+sdown) {
+		      star[i].style.top=stary[i]+"px";
+		      star[i].style.left=starx[i]+"px";
+		    }
+		    else {
+		      star[i].style.visibility="hidden";
+		      starv[i]=0;
+		      return;
+		    }
+		  }
+		  else {
+		    tinyv[i]=50;
+		    tiny[i].style.top=(tinyy[i]=stary[i])+"px";
+		    tiny[i].style.left=(tinyx[i]=starx[i])+"px";
+		    tiny[i].style.width="2px";
+		    tiny[i].style.height="2px";
+		    tiny[i].style.backgroundColor=star[i].childNodes[0].style.backgroundColor;
+		    star[i].style.visibility="hidden";
+		    tiny[i].style.visibility="visible"
+		  }
+		}
+
+		function update_tiny(i) {
+		  if (--tinyv[i]==25) {
+		    tiny[i].style.width="1px";
+		    tiny[i].style.height="1px";
+		  }
+		  if (tinyv[i]) {
+		    tinyy[i]+=1+Math.random()*3;
+		    tinyx[i]+=(i%5-2)/5;
+		    if (tinyy[i]<shigh+sdown) {
+		      tiny[i].style.top=tinyy[i]+"px";
+		      tiny[i].style.left=tinyx[i]+"px";
+		    }
+		    else {
+		      tiny[i].style.visibility="hidden";
+		      tinyv[i]=0;
+		      return;
+		    }
+		  }
+		  else tiny[i].style.visibility="hidden";
+		}
+
+		document.onmousemove=mouse;
+		function mouse(e) {
+		  if (e) {
+		    y=e.pageY;
+		    x=e.pageX;
+		  }
+		  else {
+		    set_scroll();
+		    y=event.y+sdown;
+		    x=event.x+sleft;
+		  }
+		}
+
+		window.onscroll=set_scroll;
+		function set_scroll() {
+		  if (typeof(self.pageYOffset)=='number') {
+		    sdown=self.pageYOffset;
+		    sleft=self.pageXOffset;
+		  }
+		  else if (document.body && (document.body.scrollTop || document.body.scrollLeft)) {
+		    sdown=document.body.scrollTop;
+		    sleft=document.body.scrollLeft;
+		  }
+		  else if (document.documentElement && (document.documentElement.scrollTop || document.documentElement.scrollLeft)) {
+		    sleft=document.documentElement.scrollLeft;
+		    sdown=document.documentElement.scrollTop;
+		  }
+		  else {
+		    sdown=0;
+		    sleft=0;
+		  }
+		}
+
+		window.onresize=set_width;
+		function set_width() {
+		  var sw_min=999999;
+		  var sh_min=999999;
+		  if (document.documentElement && document.documentElement.clientWidth) {
+		    if (document.documentElement.clientWidth>0) sw_min=document.documentElement.clientWidth;
+		    if (document.documentElement.clientHeight>0) sh_min=document.documentElement.clientHeight;
+		  }
+		  if (typeof(self.innerWidth)=='number' && self.innerWidth) {
+		    if (self.innerWidth>0 && self.innerWidth<sw_min) sw_min=self.innerWidth;
+		    if (self.innerHeight>0 && self.innerHeight<sh_min) sh_min=self.innerHeight;
+		  }
+		  if (document.body.clientWidth) {
+		    if (document.body.clientWidth>0 && document.body.clientWidth<sw_min) sw_min=document.body.clientWidth;
+		    if (document.body.clientHeight>0 && document.body.clientHeight<sh_min) sh_min=document.body.clientHeight;
+		  }
+		  if (sw_min==999999 || sh_min==999999) {
+		    sw_min=800;
+		    sh_min=600;
+		  }
+		  swide=sw_min;
+		  shigh=sh_min;
+		}
+
+		function createDiv(height, width) {
+		  var div=document.createElement("div");
+		  div.style.position="absolute";
+		  div.style.height=height+"px";
+		  div.style.width=width+"px";
+		  div.style.overflow="hidden";
+		  return (div);
+		}
+
+		function newColour() {
+		  var c=new Array();
+		  c[0]=255;
+		  c[1]=Math.floor(Math.random()*256);
+		  c[2]=Math.floor(Math.random()*(256-c[1]/2));
+		  c.sort(function(){return (0.5 - Math.random());});
+		  return ("rgb("+c[0]+", "+c[1]+", "+c[2]+")");
+		}
+	</script>
+<style>
+    a,
+    a:visited {
+      color: #ffffff;
+    }
+    body {
+        background-color: rgb(0, 0, 0);
+        color: rgb(255, 255, 255);
+        font-size: large;
+        display: flex;
+        align-items: center; 
+        justify-content: center; 
+        height: 100vh; 
+        margin: 0;
+	user-select: none; 
+        }
+        balls-skibidi-toaleta {
+      color: #ffffff;
+      border: rgb(0, 0, 0);
+      border-radius: 5px;
+      font-size: 18px;
+      font-family: "Courier New", Monospace;
+        }   
+       .white-dot {
+        color: rgb(255, 255, 255);
+        }
+        footer {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        margin: 20px;
+        }
+        footer a {
+        color: #ddddff50;
+        text-decoration: none;
+        }
+	html, body {
+            overflow-x: hidden;
+            overflow-y: hidden;
+        }
+
+@font-face {
+  font-family: Courier New;
+  src: url(Courier.ttf);
+}
+
+.rainbow {  
+	   /* Font options */
+	  text-shadow: 4px 2px 4px #3d3d3d;
+	  
+	   /* Chrome, Safari, Opera */
+	  -webkit-animation: rainbow 5s infinite; 
+	  
+	  /* Internet Explorer */
+	  -ms-animation: rainbow 5s infinite;
+	  
+	  /* Standar Syntax */
+	  animation: rainbow 5s infinite; 
+	}
+
+	/* Chrome, Safari, Opera */
+	@-webkit-keyframes rainbow{
+	  	0%{color: red;}	
+		17%{color: orange;}
+		33%{color: yellow;}
+		50%{color: green;}
+		67%{color: blue;}
+		84%{color: purple;}
+	 	100%{color: red;}
+	}
+
+	/* Internet Explorer */
+	@-ms-keyframes rainbow{
+	  	0%{color: red;}	
+		17%{color: orange;}
+		33%{color: yellow;}
+		50%{color: green;}
+		67%{color: blue;}
+		84%{color: purple;}
+	 	100%{color: red;}
+	}
+
+	/* Standar Syntax */
+	@keyframes  rainbow{
+	  	0%{color: red;}	
+		17%{color: orange;}
+		33%{color: yellow;}
+		50%{color: green;}
+		67%{color: blue;}
+		84%{color: purple;}
+	 	100%{color: red;}
+	}
+	.rainbow2 {  
+	  
+	   /* Chrome, Safari, Opera */
+	  -webkit-animation: rainbow 5s infinite; 
+	  
+	  /* Internet Explorer */
+	  -ms-animation: rainbow 5s infinite;
+	  
+	  /* Standar Syntax */
+	  animation: rainbow 5s infinite; 
+	}
+
+	/* Chrome, Safari, Opera */
+	@-webkit-keyframes rainbow{
+	  	0%{color: red;}	
+		17%{color: orange;}
+		33%{color: yellow;}
+		50%{color: green;}
+		67%{color: blue;}
+		84%{color: purple;}
+	 	100%{color: red;}
+	}
+
+	/* Internet Explorer */
+	@-ms-keyframes rainbow{
+	  	0%{color: red;}	
+		17%{color: orange;}
+		33%{color: yellow;}
+		50%{color: green;}
+		67%{color: blue;}
+		84%{color: purple;}
+	 	100%{color: red;}
+	}
+
+	/* Standar Syntax */
+	@keyframes  rainbow{
+	  	0%{color: red;}	
+		17%{color: orange;}
+		33%{color: yellow;}
+		50%{color: green;}
+		67%{color: blue;}
+		84%{color: purple;}
+	 	100%{color: red;}
+	}
+	.bar {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			padding: 0;
+			margin: 0;
+			background: #1e5799;
+			background: -moz-linear-gradient(left, #1e5799 0, #f300ff 50%, #e0ff00 100%);
+			background: -webkit-gradient(linear, left top, right top, color-stop(0, #1e5799), color-stop(50%, #f300ff), color-stop(100%, #e0ff00));
+			background: -webkit-linear-gradient(left, #1e5799 0, #f300ff 50%, #e0ff00 100%);
+			background: -o-linear-gradient(left, #1e5799 0, #f300ff 50%, #e0ff00 100%);
+			background: -ms-linear-gradient(left, #1e5799 0, #f300ff 50%, #e0ff00 100%);
+			background: linear-gradient(to right, #1e5799 0, #f300ff 50%, #e0ff00 100%);
+			height: 5px;
+			border-bottom: 1px solid #000;
+			z-index: 1000; 
+}
+</style>
+</head>
+<body>
+	<div class="bar"></div>
+	<pre style="display: flex; justify-content: center;"><samp> <center>
+  <samp> <balls-skibidi-toaleta class="rainbow" id="element1" onClick="javascript:changeText(1)">
+
+   ▄████████  ▄██████▄  ▀█████████▄  
+   ███    ███ ███    ███   ███    ███ 
+   ███    █▀  ███    ███   ███    ███ 
+   ███        ███    ███  ▄███▄▄▄██▀  
+   ██████████ ███    ███ ▀▀███▀▀▀██▄  
+          ███ ███    ███   ███    ██▄ 
+    ▄█    ███ ███    ███   ███    ███ 
+   ▄████████▀   ▀██████▀  ▄█████████▀    
+</center>
+            
+<center><samp>Cyber Security
+
+<center> <samp> <a class="rainbow2" href="https://e-z.bio/sob">Socials</a> 
+</pre>
+</body>
+</html>
